@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pinyougou.mapper.TypeTemplateMapper">
+
+	<select id="findAll" resultType="TypeTemplate">
+		select * from tb_type_template
+		<where>
+			<if test="name != null and name != ''">
+				name like CONCAT('%',#{name}, '%')
+			</if>
+		</where>
+	</select>
+
+	<!--批量删除类型模板-->
+	<delete id="deleteAll">
+		delete from tb_type_template where id in 
+		<foreach collection="ids" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+</mapper>
